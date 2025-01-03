@@ -10,6 +10,7 @@ import 'firebase_options.dart';
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
