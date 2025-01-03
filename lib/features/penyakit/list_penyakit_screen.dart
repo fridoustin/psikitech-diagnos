@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:learn_flutter/common/widgets/appBar/app_bar.dart';
 import 'package:learn_flutter/common/widgets/bottomBar/bottom_bar.dart';
 import 'package:learn_flutter/constants/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:learn_flutter/features/penyakit/detail_penyakit_screen.dart';
 
 class ListPenyakitScreen extends StatelessWidget {
   static const String route = '/penyakit';
@@ -10,25 +12,25 @@ class ListPenyakitScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Dummy data for diseases
-    final List<String> penyakitList = [
-      "Agorafobia",
-      "Anorexia Nervosa",
-      "Bulimia Nervosa",
-      "Distimia",
-      "Distimia Resiko Bunuh Diri",
-      "Episode Depresi",
-      "Episode Manik (Saat Ini/Dulu)",
-      "Gangguan Anxietas Menyeluruh",
-      "Gangguan Berkaitan Alkohol",
-      "Gangguan Berkaitan Zat Psikoaktif",
-      "Gangguan Depresi Berulang",
-      "Gangguan Obsesif Kompulsif",
-      "Gangguan Panik",
-      "Gangguan Panik dengan Agorafobia",
-      "Gangguan Stres Pasca Trauma",
-      "Sosialfobia"
-    ];
+    // // Dummy data for diseases
+    // final List<String> penyakitList = [
+    //   "Agorafobia",
+    //   "Anorexia Nervosa",
+    //   "Bulimia Nervosa",
+    //   "Distimia",
+    //   "Distimia Resiko Bunuh Diri",
+    //   "Episode Depresi",
+    //   "Episode Manik (Saat Ini/Dulu)",
+    //   "Gangguan Anxietas Menyeluruh",
+    //   "Gangguan Berkaitan Alkohol",
+    //   "Gangguan Berkaitan Zat Psikoaktif",
+    //   "Gangguan Depresi Berulang",
+    //   "Gangguan Obsesif Kompulsif",
+    //   "Gangguan Panik",
+    //   "Gangguan Panik dengan Agorafobia",
+    //   "Gangguan Stres Pasca Trauma",
+    //   "Sosialfobia"
+    // ];
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -89,26 +91,47 @@ class ListPenyakitScreen extends StatelessWidget {
               ),
               // List of diseases
               Expanded(
-                child: ListView.builder(
-                  itemCount: penyakitList.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: ListTile(
-                        title: Text(
-                          penyakitList[index],
-                          style: TextStyle(color: Colors.grey.shade800),
-                        ),
-                        onTap: () {
-                          // Action when a disease is tapped
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Kamu memilih: ${penyakitList[index]}')),
-                          );
-                        },
-                      ),
+                child:  StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance.collection('gangguan').snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return const Center(child: Text('Tidak ada data'));
+                    }
+
+                    final penyakitList = snapshot.data!.docs;
+
+                    return ListView.builder(
+                      itemCount: penyakitList.length,
+                      itemBuilder: (context, index) {
+                        final penyakit = penyakitList[index];
+                        return Card(
+                          margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                          child: ListTile(
+                            title: Text(
+                              penyakit['judul'],
+                              style: TextStyle(color: Colors.grey.shade800),
+                            ),
+                            onTap: () {
+                              // Navigate to detail screen
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailPenyakitScreen(
+                                    judul: penyakit['judul'],
+                                    deskripsi: penyakit['definisi'],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
                     );
-                  },
-                ),
+                  }
+                )
               ),
             ],
           ),
