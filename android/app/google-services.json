@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "619604146805",
+    "project_id": "psikitechdiagnos-80803",
+    "storage_bucket": "psikitechdiagnos-80803.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619604146805:android:9c05aa65de5f1fe2c4163c",
+        "android_client_info": {
+          "package_name": "com.psikitechdiagnos.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfXenZhErtRmiHXSeKDYzMjIoFTWRxZ4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

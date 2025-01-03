@@ -4,10 +4,15 @@ import 'package:learn_flutter/constants/colors.dart';
 import 'package:learn_flutter/features/home/home_screen.dart';
 import 'package:learn_flutter/constants/theme.dart';
 import 'package:learn_flutter/route.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
