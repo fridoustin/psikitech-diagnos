@@ -3,9 +3,10 @@ import 'package:learn_flutter/common/widgets/appBar/app_bar_diagnos.dart';
 
 class DetailPenyakitScreen extends StatelessWidget {
   final String judul;
-  final String deskripsi;
+  final String definisi;
+  final String gejala;
 
-  const DetailPenyakitScreen({super.key, required this.judul, required this.deskripsi});
+  const DetailPenyakitScreen({super.key, required this.judul, required this.definisi, required this.gejala});
 
   @override
   Widget build(BuildContext context) {
@@ -13,19 +14,87 @@ class DetailPenyakitScreen extends StatelessWidget {
       appBar: AppBarDiagnosWidget(label: judul),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Definisi",
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16.0),
-            Text(
-              deskripsi,
-              style: TextStyle(fontSize: 16.0, color: Colors.grey.shade800),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Card(
+                elevation: 2,
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Definisi",
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      Text(
+                        definisi,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.grey.shade800,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 2,
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Gejala",
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      ...gejala.split('•').where((item) => item.trim().isNotEmpty).map((item) {
+                        final parts = item.split('-');
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '• ${parts.first.trim()}',
+                              style: TextStyle(fontSize: 16.0, color: Colors.grey.shade800),
+                            ),
+                            if (parts.length > 1)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: parts.skip(1).map((subItem) {
+                                    return Text(
+                                      '- ${subItem.trim()}',
+                                      style: TextStyle(fontSize: 16.0, color: Colors.grey.shade800),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                          ],
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -121,7 +121,8 @@ class ListPenyakitScreen extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) => DetailPenyakitScreen(
                                     judul: penyakit['judul'],
-                                    deskripsi: penyakit['definisi'],
+                                    definisi: penyakit['definisi'],
+                                    gejala: penyakit['gejala']
                                   ),
                                 ),
                               );
@@ -140,3 +141,4 @@ class ListPenyakitScreen extends StatelessWidget {
     );
   }
 }
+
