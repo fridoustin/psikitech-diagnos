@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/common/widgets/appBar/app_bar.dart';
+import 'package:learn_flutter/common/widgets/appBar/app_bar_diagnos.dart';
 import 'package:learn_flutter/common/widgets/bottomBar/bottom_bar.dart';
 import 'package:learn_flutter/constants/colors.dart';
 
@@ -12,7 +12,7 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: AppBarWidget(label: ""),
+      appBar: AppBarDiagnosWidget(label: "About"),
       bottomNavigationBar: BottomBarWidget(currentIndex: 2),
     );
   }
