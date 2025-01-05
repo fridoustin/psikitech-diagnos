@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/features/about/about_screen.dart';
-import 'package:learn_flutter/features/diagnosis/domain/repositories/diagnosis_repository.dart';
-import 'package:learn_flutter/features/diagnosis/domain/usecase/save_diagnosis_result.dart';
+import 'package:learn_flutter/features/diagnosis/ui/biodata_screen.dart';
 import 'package:learn_flutter/features/diagnosis/ui/diagnosis_screen_a.dart';
 import 'package:learn_flutter/features/diagnosis/ui/history_diagnosis.dart';
 import 'package:learn_flutter/features/diagnosis/ui/result_screen.dart';
@@ -13,14 +12,14 @@ Route<dynamic> routeGenerators(RouteSettings settings) {
   switch (settings.name) {
     case HomePage.route :
       return _buildPageRoute(const HomePage());
+    case BiodataScreen.route :
+      return _buildPageRoute(const BiodataScreen());
     case AboutScreen.route :
       return _buildPageRoute(const AboutScreen());
     case ListPenyakitScreen.route :
       return _buildPageRoute(const ListPenyakitScreen());
     case DiagnosisScreen.route:
-      return _buildPageRoute(DiagnosisScreen(
-        saveDiagnosisResult: args is SaveDiagnosisResult ? args : null,
-      ));
+      return _buildPageRoute(const DiagnosisScreen());
     case ResultScreen.route:
       if (args is String) {
         return _buildPageRoute(ResultScreen(result: args)); // Ubah parameter ke `result`
@@ -28,14 +27,7 @@ Route<dynamic> routeGenerators(RouteSettings settings) {
         throw ('Diagnosis result not provided for ResultScreen');
       }
     case HistoryScreen.route:
-      // Izinkan `args` bernilai null atau `DiagnosisRepository`
-      if (args == null || args is DiagnosisRepository) {
-        return _buildPageRoute(
-          HistoryScreen(repository: args as DiagnosisRepository?),
-        );
-      } else {
-        throw ('Invalid argument provided for HistoryScreen');
-      }
+      return _buildPageRoute(const HistoryScreen());    
     default:
       throw ('Route not found');
   }  
