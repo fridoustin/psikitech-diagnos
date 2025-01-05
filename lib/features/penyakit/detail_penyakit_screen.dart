@@ -65,12 +65,13 @@ class DetailPenyakitScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16.0),
-                      ...gejala
-                          .split('•')
-                          .where((item) => item.trim().isNotEmpty)
-                          .map((item) {
-                        final parts = item.split('-');
-                        return Column(
+                      if (gejala.contains('•')) // Jika ada tanda •, pecah menjadi poin-poin
+                        ...gejala
+                            .split('•')
+                            .where((item) => item.trim().isNotEmpty)
+                            .map((item) {
+                          final parts = item.split('-');
+                          return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -92,7 +93,16 @@ class DetailPenyakitScreen extends StatelessWidget {
                               ),
                           ],
                         );
-                      }),
+                        })
+                      else // Jika tidak ada tanda •, tampilkan teks apa adanya
+                        Text(
+                          gejala.trim(),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey.shade800,
+                            height: 1.5,
+                          ),
+                        ),
                     ],
                   ),
                 ),
