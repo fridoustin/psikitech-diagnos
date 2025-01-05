@@ -30,6 +30,31 @@ class _BiodataScreenState extends State<BiodataScreen> {
     });
   }
 
+  // Fungsi untuk validasi apakah semua form terisi
+  bool isFormValid() {
+    return umurController.text.isNotEmpty &&
+        tinggiController.text.isNotEmpty &&
+        beratController.text.isNotEmpty &&
+        jenisKelamin != null;
+  }
+
+  // Fungsi untuk menampilkan pesan error jika form belum lengkap
+  void showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Data Belum Lengkap"),
+        content: const Text("Harap isi semua data sebelum melanjutkan."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +129,12 @@ class _BiodataScreenState extends State<BiodataScreen> {
                         ),
                       ),
                       value: jenisKelamin,
+                      dropdownColor: AppColors.backgroundColor, // Warna latar belakang dropdown
+                      style: const TextStyle(
+                        fontSize: 16, // Ukuran teks
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black, // Warna teks
+                      ),
                       items: const [
                         DropdownMenuItem(
                           value: "Laki-laki",
@@ -133,9 +164,12 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       child: ElevatedButton(
                         onPressed: resetForm,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey,
+                          backgroundColor: Colors.orange[300],
                         ),
-                        child: const Text("Reset"),
+                        child: const Text(
+                          "Reset",
+                          style: TextStyle(color: Colors.black54),
+                        ),
                       ),
                     ),
                   ],
@@ -153,13 +187,23 @@ class _BiodataScreenState extends State<BiodataScreen> {
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, '/home');
                     },
-                    child: const Text("Kembali"),
+                    style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.secondaryColor,
+                        ),
+                    child: const Text("Kembali", style: TextStyle(color: Colors.black)),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/diagnosis');
+                      if (isFormValid()) {
+                        Navigator.pushReplacementNamed(context, '/diagnosis');
+                      } else {
+                        showErrorDialog();
+                      }
                     },
-                    child: const Text("Lanjut"),
+                    style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.secondaryColor,
+                        ),
+                    child: const Text("Lanjut", style: TextStyle(color: Colors.black)),
                   ),
                 ],
               ),
