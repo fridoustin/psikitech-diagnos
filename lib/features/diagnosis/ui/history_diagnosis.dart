@@ -1,29 +1,84 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:learn_flutter/common/widgets/appBar/app_bar_diagnos.dart';
+import 'package:learn_flutter/constants/colors.dart';
 import 'package:learn_flutter/features/diagnosis/domain/models/diagnosis_result.dart';
-import 'package:learn_flutter/features/diagnosis/domain/repositories/diagnosis_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HistoryScreen extends StatelessWidget {
-  final DiagnosisRepository? repository;
-
+class HistoryScreen extends StatefulWidget {
   static const String route = '/history';
 
-  const HistoryScreen({super.key, this.repository});
+  const HistoryScreen({super.key});
 
-  Future<List<DiagnosisResult>> _loadHistory() async {
-    if (repository == null) return [];
-    return await repository!.getHistory();
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends State<HistoryScreen> {
+  late Future<List<DiagnosisResult>> _historyFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _historyFuture = _loadHistory();
   }
 
-  Future<void> _debugPrintSharedPreferences() async {
+  Future<List<DiagnosisResult>> _loadHistory() async {
     final prefs = await SharedPreferences.getInstance();
-    final historyJson = prefs.getStringList('diagnosis_history') ?? [];
-    print("Data di SharedPreferences:");
-    for (var item in historyJson) {
-      print(item); // Ini akan mencetak JSON mentah
-    }
+    final historyJsonList = prefs.getStringList('diagnosis_history') ?? [];
+    return historyJsonList
+        .map((jsonString) => DiagnosisResult.fromJson(json.decode(jsonString)))
+        .toList();
+  }
+
+  Future<void> _deleteItem(int index) async {
+    final prefs = await SharedPreferences.getInstance();
+    final historyJsonList = prefs.getStringList('diagnosis_history') ?? [];
+
+    // Hapus item berdasarkan indeks
+    historyJsonList.removeAt(index);
+
+    // Simpan daftar yang telah diperbarui
+    await prefs.setStringList('diagnosis_history', historyJsonList);
+
+    // Perbarui UI
+    setState(() {
+      _historyFuture = _loadHistory();
+    });
+  }
+
+  void _showDeleteConfirmationDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: AppColors.backgroundColor,
+          title: const Text("Konfirmasi Hapus"),
+          content: const Text(
+            "Apakah Anda yakin ingin menghapus hasil diagnosa ini?",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog tanpa menghapus
+              },
+              child: const Text("Batal"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog
+                _deleteItem(index); // Hapus item
+              },
+              child: const Text(
+                "Hapus",
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -31,7 +86,7 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: const AppBarDiagnosWidget(label: "Histori Diagnosa"),
       body: FutureBuilder<List<DiagnosisResult>>(
-        future: _loadHistory(),
+        future: _historyFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -63,6 +118,7 @@ class HistoryScreen extends StatelessWidget {
               final result = history[index];
               final formattedDate =
                   DateFormat('dd MMM yyyy, HH:mm').format(result.date);
+
               return ListTile(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -84,14 +140,14 @@ class HistoryScreen extends StatelessWidget {
                   color: Colors.blue.shade600,
                   size: 32,
                 ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () => _showDeleteConfirmationDialog(index),
+                ),
               );
             },
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _debugPrintSharedPreferences, // Panggil fungsi debug
-        child: const Icon(Icons.bug_report),
       ),
     );
   }
