@@ -122,7 +122,8 @@ class ListPenyakitScreen extends StatelessWidget {
                                   builder: (context) => DetailPenyakitScreen(
                                     judul: penyakit['judul'],
                                     definisi: penyakit['definisi'],
-                                    gejala: penyakit['gejala']
+                                    gejala: penyakit['gejala'],
+                                    tatalaksana: penyakit['tatalaksana']
                                   ),
                                 ),
                               );
