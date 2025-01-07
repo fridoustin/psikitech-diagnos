@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/common/widgets/appBar/app_bar_diagnos.dart';
-import 'package:learn_flutter/features/home/home_screen.dart';
+import 'package:psikitech_diagnos/common/widgets/appBar/app_bar_diagnos.dart';
+import 'package:psikitech_diagnos/features/home/home_screen.dart';
 
 class ResultScreen extends StatelessWidget {
   static const String route = '/result';

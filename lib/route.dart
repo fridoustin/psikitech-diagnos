@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/features/about/about_screen.dart';
-import 'package:learn_flutter/features/diagnosis/ui/biodata_screen.dart';
-import 'package:learn_flutter/features/diagnosis/ui/diagnosis_screen_a.dart';
-import 'package:learn_flutter/features/diagnosis/ui/history_diagnosis.dart';
-import 'package:learn_flutter/features/diagnosis/ui/result_screen.dart';
-import 'package:learn_flutter/features/home/home_screen.dart';
-import 'package:learn_flutter/features/penyakit/list_penyakit_screen.dart';
+import 'package:psikitech_diagnos/features/about/about_screen.dart';
+import 'package:psikitech_diagnos/features/diagnosis/ui/biodata_screen.dart';
+import 'package:psikitech_diagnos/features/diagnosis/ui/diagnosis_screen_a.dart';
+import 'package:psikitech_diagnos/features/diagnosis/ui/history_diagnosis.dart';
+import 'package:psikitech_diagnos/features/diagnosis/ui/result_screen.dart';
+import 'package:psikitech_diagnos/features/home/home_screen.dart';
+import 'package:psikitech_diagnos/features/penyakit/list_penyakit_screen.dart';
 
 Route<dynamic> routeGenerators(RouteSettings settings) {
   final args = settings.arguments;

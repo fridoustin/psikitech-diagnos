@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/common/widgets/appBar/app_bar_diagnos.dart';
+import 'package:psikitech_diagnos/common/widgets/appBar/app_bar_diagnos.dart';
 
 class DetailPenyakitScreen extends StatelessWidget {
   final String judul;

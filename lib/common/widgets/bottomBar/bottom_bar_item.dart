@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/constants/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psikitech_diagnos/constants/colors.dart';
 
 class BottomBarItemWidget extends StatelessWidget {
   final int index;

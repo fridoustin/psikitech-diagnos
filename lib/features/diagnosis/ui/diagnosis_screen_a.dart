@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/common/widgets/appBar/app_bar_diagnos.dart';
-import 'package:learn_flutter/common/widgets/questionTitle/question_title.dart';
-import 'package:learn_flutter/core/local_storage.dart';
-import 'package:learn_flutter/features/diagnosis/data/diagnosis_repository_impl.dart';
-import 'package:learn_flutter/features/diagnosis/domain/usecase/save_diagnosis_result.dart';
-import 'package:learn_flutter/features/diagnosis/logic/diagnosis_logic_a.dart';
-import 'package:learn_flutter/features/diagnosis/ui/result_screen.dart';
+import 'package:psikitech_diagnos/common/widgets/appBar/app_bar_diagnos.dart';
+import 'package:psikitech_diagnos/common/widgets/questionTitle/question_title.dart';
+import 'package:psikitech_diagnos/core/local_storage.dart';
+import 'package:psikitech_diagnos/features/diagnosis/data/diagnosis_repository_impl.dart';
+import 'package:psikitech_diagnos/features/diagnosis/domain/usecase/save_diagnosis_result.dart';
+import 'package:psikitech_diagnos/features/diagnosis/logic/diagnosis_logic_a.dart';
+import 'package:psikitech_diagnos/features/diagnosis/ui/result_screen.dart';
 
 class DiagnosisScreen extends StatefulWidget {
   static const String route = '/diagnosis';

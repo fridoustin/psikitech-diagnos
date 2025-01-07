@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/common/widgets/appBar/app_bar.dart';
-import 'package:learn_flutter/common/widgets/bottomBar/bottom_bar.dart';
-import 'package:learn_flutter/constants/colors.dart';
+import 'package:psikitech_diagnos/common/widgets/appBar/app_bar.dart';
+import 'package:psikitech_diagnos/common/widgets/bottomBar/bottom_bar.dart';
+import 'package:psikitech_diagnos/constants/colors.dart';
 
 class HomePage extends StatelessWidget {
   static const String route = '/home';

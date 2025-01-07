@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/constants/colors.dart';
+import 'package:psikitech_diagnos/constants/colors.dart';
 
 class AppBarDiagnosWidget extends StatelessWidget implements PreferredSizeWidget {
 

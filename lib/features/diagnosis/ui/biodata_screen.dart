@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/common/widgets/appBar/app_bar_diagnos.dart';
-import 'package:learn_flutter/constants/colors.dart';
+import 'package:psikitech_diagnos/common/widgets/appBar/app_bar_diagnos.dart';
+import 'package:psikitech_diagnos/constants/colors.dart';
 
 class BiodataScreen extends StatefulWidget {
   static const String route = '/biodata';

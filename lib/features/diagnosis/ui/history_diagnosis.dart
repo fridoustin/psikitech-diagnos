@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:learn_flutter/common/widgets/appBar/app_bar_diagnos.dart';
-import 'package:learn_flutter/constants/colors.dart';
-import 'package:learn_flutter/features/diagnosis/domain/models/diagnosis_result.dart';
+import 'package:psikitech_diagnos/common/widgets/appBar/app_bar_diagnos.dart';
+import 'package:psikitech_diagnos/constants/colors.dart';
+import 'package:psikitech_diagnos/features/diagnosis/domain/models/diagnosis_result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryScreen extends StatefulWidget {
