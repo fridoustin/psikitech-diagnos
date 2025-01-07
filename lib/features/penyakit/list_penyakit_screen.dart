@@ -5,33 +5,21 @@ import 'package:learn_flutter/constants/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:learn_flutter/features/penyakit/detail_penyakit_screen.dart';
 
-class ListPenyakitScreen extends StatelessWidget {
+class ListPenyakitScreen extends StatefulWidget {
   static const String route = '/penyakit';
 
   const ListPenyakitScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // // Dummy data for diseases
-    // final List<String> penyakitList = [
-    //   "Agorafobia",
-    //   "Anorexia Nervosa",
-    //   "Bulimia Nervosa",
-    //   "Distimia",
-    //   "Distimia Resiko Bunuh Diri",
-    //   "Episode Depresi",
-    //   "Episode Manik (Saat Ini/Dulu)",
-    //   "Gangguan Anxietas Menyeluruh",
-    //   "Gangguan Berkaitan Alkohol",
-    //   "Gangguan Berkaitan Zat Psikoaktif",
-    //   "Gangguan Depresi Berulang",
-    //   "Gangguan Obsesif Kompulsif",
-    //   "Gangguan Panik",
-    //   "Gangguan Panik dengan Agorafobia",
-    //   "Gangguan Stres Pasca Trauma",
-    //   "Sosialfobia"
-    // ];
+  State<ListPenyakitScreen> createState() => _ListPenyakitScreenState();
+}
 
+class _ListPenyakitScreenState extends State<ListPenyakitScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = "";
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: const AppBarWidget(label: "Penyakit apa yang ingin kamu cari?"),
@@ -76,13 +64,16 @@ class ListPenyakitScreen extends StatelessWidget {
                     const SizedBox(width: 8.0),
                     Expanded(
                       child: TextField(
+                        controller: _searchController,
                         decoration: InputDecoration(
                           hintText: "Cari Penyakit...",
                           hintStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14.0),
                           border: InputBorder.none,
                         ),
                         onChanged: (value) {
-                          // Add search logic here
+                          setState(() {
+                            _searchQuery = value.toLowerCase();
+                          });
                         },
                       ),
                     ),
@@ -91,7 +82,7 @@ class ListPenyakitScreen extends StatelessWidget {
               ),
               // List of diseases
               Expanded(
-                child:  StreamBuilder<QuerySnapshot>(
+                child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance.collection('gangguan').snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -101,7 +92,15 @@ class ListPenyakitScreen extends StatelessWidget {
                       return const Center(child: Text('Tidak ada data'));
                     }
 
-                    final penyakitList = snapshot.data!.docs;
+                    // Filter data based on search query
+                    final penyakitList = snapshot.data!.docs.where((doc) {
+                      final judul = doc['judul'].toString().toLowerCase();
+                      return judul.contains(_searchQuery);
+                    }).toList();
+
+                    if (penyakitList.isEmpty) {
+                      return const Center(child: Text('Penyakit tidak ditemukan'));
+                    }
 
                     return ListView.builder(
                       itemCount: penyakitList.length,
@@ -123,7 +122,7 @@ class ListPenyakitScreen extends StatelessWidget {
                                     judul: penyakit['judul'],
                                     definisi: penyakit['definisi'],
                                     gejala: penyakit['gejala'],
-                                    tatalaksana: penyakit['tatalaksana']
+                                    tatalaksana: penyakit['tatalaksana'],
                                   ),
                                 ),
                               );
@@ -132,8 +131,8 @@ class ListPenyakitScreen extends StatelessWidget {
                         );
                       },
                     );
-                  }
-                )
+                  },
+                ),
               ),
             ],
           ),
@@ -142,4 +141,3 @@ class ListPenyakitScreen extends StatelessWidget {
     );
   }
 }
-
