@@ -1,5 +1,5 @@
-import 'package:learn_flutter/features/diagnosis/domain/models/diagnosis_result.dart';
-import 'package:learn_flutter/features/diagnosis/domain/repositories/diagnosis_repository.dart';
+import 'package:psikitech_diagnos/features/diagnosis/domain/models/diagnosis_result.dart';
+import 'package:psikitech_diagnos/features/diagnosis/domain/repositories/diagnosis_repository.dart';
 
 class SaveDiagnosisResult {
   final DiagnosisRepository repository;

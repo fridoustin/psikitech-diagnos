@@ -1,6 +1,6 @@
 // ignore: file_names
-import 'package:learn_flutter/features/diagnosis/domain/models/diagnosis_result.dart';
-import 'package:learn_flutter/features/diagnosis/domain/usecase/save_diagnosis_result.dart';
+import 'package:psikitech_diagnos/features/diagnosis/domain/models/diagnosis_result.dart';
+import 'package:psikitech_diagnos/features/diagnosis/domain/usecase/save_diagnosis_result.dart';
 
 class DiagnosisLogic {
   // Jawaban dari setiap pertanyaan
