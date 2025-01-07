@@ -37,9 +37,9 @@ class DetailPenyakitScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 16.0),
                       Text(
-                        definisi,
+                        definisi.replaceAll('\\n', '\n \n'),
                         style: TextStyle(
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                           color: Colors.grey.shade800,
                           height: 1.5,
                         ),
@@ -67,6 +67,7 @@ class DetailPenyakitScreen extends StatelessWidget {
                       const SizedBox(height: 16.0),
                       if (gejala.contains('•')) // Jika ada tanda •, pecah menjadi poin-poin
                         ...gejala
+                            .replaceAll('\\n', '\n \n')
                             .split('•')
                             .where((item) => item.trim().isNotEmpty)
                             .map((item) {
@@ -76,7 +77,10 @@ class DetailPenyakitScreen extends StatelessWidget {
                           children: [
                             Text(
                               '• ${parts.first.trim()}',
-                              style: TextStyle(fontSize: 16.0, color: Colors.grey.shade800),
+                              style: TextStyle(
+                                fontSize: 14.0, 
+                                color: Colors.grey.shade800
+                              ),
                             ),
                             if (parts.length > 1)
                               Padding(
@@ -86,7 +90,7 @@ class DetailPenyakitScreen extends StatelessWidget {
                                   children: parts.skip(1).map((subItem) {
                                     return Text(
                                       '- ${subItem.trim()}',
-                                      style: TextStyle(fontSize: 16.0, color: Colors.grey.shade800, height: 1.5),
+                                      style: TextStyle(fontSize: 14.0, color: Colors.grey.shade800, height: 1.5),
                                     );
                                   }).toList(),
                                 ),
@@ -96,9 +100,9 @@ class DetailPenyakitScreen extends StatelessWidget {
                         })
                       else // Jika tidak ada tanda •, tampilkan teks apa adanya
                         Text(
-                          gejala.trim(),
+                          gejala.replaceAll('\\n', '\n \n'),
                           style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: 14.0,
                             color: Colors.grey.shade800,
                             height: 1.5,
                           ),
@@ -126,13 +130,14 @@ class DetailPenyakitScreen extends StatelessWidget {
                       const SizedBox(height: 16.0),
                       if (tatalaksana.contains('•')) // Jika ada tanda •, pecah menjadi poin-poin
                         ...tatalaksana
+                            .replaceAll('\\n', '\n \n')
                             .split('•')
                             .where((item) => item.trim().isNotEmpty)
                             .map((item) {
                           return Text(
                             '• ${item.trim()}',
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                               color: Colors.grey.shade800,
                               height: 1.5,
                             ),
@@ -140,9 +145,9 @@ class DetailPenyakitScreen extends StatelessWidget {
                         })
                       else // Jika tidak ada tanda •, tampilkan teks apa adanya
                         Text(
-                          tatalaksana.trim(),
+                          tatalaksana.replaceAll('\\n', '\n \n'),
                           style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: 14.0,
                             color: Colors.grey.shade800,
                             height: 1.5,
                           ),
